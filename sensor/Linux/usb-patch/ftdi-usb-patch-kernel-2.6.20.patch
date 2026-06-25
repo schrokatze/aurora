@@ -1,0 +1,208 @@
+diff -Naur linux-2.6.20.original/drivers/usb/serial/ftdi_sio.c linux-2.6.20.all-patch/drivers/usb/serial/ftdi_sio.c
+--- linux-2.6.20.original/drivers/usb/serial/ftdi_sio.c	2007-04-13 16:48:14.000000000 -0400
++++ linux-2.6.20.all-patch/drivers/usb/serial/ftdi_sio.c	2007-04-23 11:16:45.000000000 -0400
+@@ -17,6 +17,16 @@
+  * See http://ftdi-usb-sio.sourceforge.net for upto date testing info
+  *	and extra documentation
+  *
++ * (09/Aug/2006) Martin Geleynse
++ *      Added sysfs attributes to access latency timer and event character
++ *      for FT232BM chip. Added module parameter to set default latency time
++ *      for NDI HUC - Host USB Convter from NDI. 
++ *
++ * (24/Nov/2005) David Ristau
++ *      Added PID for NDI Host USB Converter.
++ *      Added PIDs for future NDI devices.
++ *           For these devices 19.2Kbaud rate is aliased to 1.2M baud rate.
++ * 
+  * (21/Jul/2004) Ian Abbott
+  *      Incorporated Steven Turner's code to add support for the FT2232C chip.
+  *      The prelimilary port to the 2.6 kernel was by Rus V. Brushkoff.  I have
+@@ -83,7 +93,7 @@
+  *
+  * (18/Jun/2003) Ian Abbott
+  *      Added Device ID of the USB relais from Rudolf Gugler (backported from
+- *      Philipp Gühring's patch for 2.5.x kernel).
++ *      Philipp Ghring's patch for 2.5.x kernel).
+  *      Moved read transfer buffer reallocation into startup function.
+  *      Free existing write urb and transfer buffer in startup function.
+  *      Only use urbs in write urb pool that were successfully allocated.
+@@ -267,6 +277,12 @@
+ #define DRIVER_AUTHOR "Greg Kroah-Hartman <greg@kroah.com>, Bill Ryder <bryder@sgi.com>, Kuba Ober <kuba@mareimbrium.org>"
+ #define DRIVER_DESC "USB FTDI Serial Converters Driver"
+ 
++/* 
++ * Module parameter to control latency timer for NDI HUC.
++ * If this value is not set in modprobe.conf.local va;ue will be set to 1ms
++ */
++static int ndi_latency_timer = 0;
++
+ static int debug;
+ static __u16 vendor = FTDI_VID;
+ static __u16 product;
+@@ -278,6 +294,7 @@
+ 
+ static void  ftdi_USB_UIRT_setup	(struct usb_serial *serial);
+ static void  ftdi_HE_TIRA1_setup	(struct usb_serial *serial);
++static void  ftdi_NDI_HUC_setup		(struct usb_serial *serial);
+ 
+ static struct ftdi_sio_quirk ftdi_USB_UIRT_quirk = {
+ 	.setup = ftdi_USB_UIRT_setup,
+@@ -287,6 +304,10 @@
+ 	.setup = ftdi_HE_TIRA1_setup,
+ };
+ 
++static struct ftdi_sio_quirk ftdi_NDI_HUC_quirk = {
++	.setup = ftdi_NDI_HUC_setup,
++};
++
+ /*
+  * The 8U232AM has the same API as the sio except for:
+  * - it can support MUCH higher baudrates; up to:
+@@ -514,6 +535,14 @@
+ 	{ USB_DEVICE(FTDI_VID, FTDI_TACTRIX_OPENPORT_13S_PID) },
+ 	{ USB_DEVICE(FTDI_VID, FTDI_TACTRIX_OPENPORT_13U_PID) },
+ 	{ USB_DEVICE(ELEKTOR_VID, ELEKTOR_FT323R_PID) },
++	{ USB_DEVICE(FTDI_VID, FTDI_NDI_HUC_PID),
++		.driver_info = (kernel_ulong_t)&ftdi_NDI_HUC_quirk },
++	{ USB_DEVICE(FTDI_VID, FTDI_NDI_SPECTRA_SCU_PID),
++		.driver_info = (kernel_ulong_t)&ftdi_NDI_HUC_quirk },
++	{ USB_DEVICE(FTDI_VID, FTDI_NDI_FUTURE_2_PID),
++		.driver_info = (kernel_ulong_t)&ftdi_NDI_HUC_quirk },
++	{ USB_DEVICE(FTDI_VID, FTDI_NDI_FUTURE_3_PID),
++		.driver_info = (kernel_ulong_t)&ftdi_NDI_HUC_quirk },	
+ 	{ },					/* Optional parameter entry */
+ 	{ }					/* Terminating entry */
+ };
+@@ -787,7 +816,7 @@
+ 
+ static __u32 get_ftdi_divisor(struct usb_serial_port * port)
+ { /* get_ftdi_divisor */
+-	struct ftdi_private *priv = usb_get_serial_port_data(port);
++ struct ftdi_private *priv = usb_get_serial_port_data(port);
+ 	__u32 div_value = 0;
+ 	int div_okay = 1;
+ 	int baud;
+@@ -833,7 +862,7 @@
+ 
+ 	if (!baud) baud = 9600;
+ 	switch(priv->chip_type) {
+-	case SIO: /* SIO chip */
++ case SIO: /* SIO chip */
+ 		switch(baud) {
+ 		case 300: div_value = ftdi_sio_b300; break;
+ 		case 600: div_value = ftdi_sio_b600; break;
+@@ -854,7 +883,7 @@
+ 		break;
+ 	case FT8U232AM: /* 8U232AM chip */
+ 		if (baud <= 3000000) {
+-			div_value = ftdi_232am_baud_to_divisor(baud);
++			div_value = ftdi_232am_baud_to_divisor(baud);			
+ 		} else {
+ 	                dbg("%s - Baud rate too high!", __FUNCTION__);
+ 			div_value = ftdi_232am_baud_to_divisor(9600);
+@@ -863,7 +892,15 @@
+ 		break;
+ 	case FT232BM: /* FT232BM chip */
+ 	case FT2232C: /* FT2232C chip */
+-		if (baud <= 3000000) {
++  if (baud <= 3000000) 
++  {
++						__u16 product_id = le16_to_cpu(port->serial->dev->descriptor.idProduct);
++						if (((FTDI_NDI_HUC_PID == product_id) ||
++					(FTDI_NDI_SPECTRA_SCU_PID == product_id) ||
++					(FTDI_NDI_FUTURE_2_PID == product_id) ||
++					(FTDI_NDI_FUTURE_3_PID == product_id)) && (baud == 19200)) {
++						baud = 1200000;
++			}
+ 			div_value = ftdi_232bm_baud_to_divisor(baud);
+ 		} else {
+ 	                dbg("%s - Baud rate too high!", __FUNCTION__);
+@@ -947,6 +984,7 @@
+ 			port->tty->alt_speed = 460800;
+ 		else
+ 			port->tty->alt_speed = 0;
++
+ 	}
+ 	if (((old_priv.flags & ASYNC_SPD_MASK) !=
+ 	     (priv->flags & ASYNC_SPD_MASK)) ||
+@@ -1009,7 +1047,7 @@
+ 		/* Assume its an FT232BM (or FT245BM) */
+ 		priv->chip_type = FT232BM;
+ 	}
+-	info("Detected %s", ftdi_chip_name[priv->chip_type]);
++	info("Detected %s", ftdi_chip_name[priv->chip_type]);	
+ }
+ 
+ 
+@@ -1262,6 +1300,37 @@
+ 	priv->force_rtscts = 1;
+ } /* ftdi_HE_TIRA1_setup */
+ 
++/* Setup for the NDI HUC device, which requires hardwired
++ * baudrate (19200 gets mapped to 1200000) */
++/* Called from usbserial:serial_probe */
++static void ftdi_NDI_HUC_setup (struct usb_serial *serial)
++{
++	struct usb_device *udev = serial->dev;
++	int latency = ndi_latency_timer;
++	int rv = 0;
++	char buf[1];
++	struct ftdi_private *priv;
++
++	if (latency == 0 ) latency = 1;
++	if (latency > 99 ) latency = 99;
++	priv = usb_get_serial_port_data(serial->port[0]);
++
++	dbg("%s setting NDI_HUC latency to %d",__FUNCTION__, latency );
++	
++	info( "NDI Device with a latency value of %d", latency );	
++
++	rv = usb_control_msg(udev, usb_sndctrlpipe(udev, 0), 
++	                     FTDI_SIO_SET_LATENCY_TIMER_REQUEST,
++	                     FTDI_SIO_SET_LATENCY_TIMER_REQUEST_TYPE,
++	                     latency, priv->interface, buf, 0, WDR_TIMEOUT);
++
++	    if (rv < 0) 
++    {
++		dev_err(&(serial->port[0]->dev), "Unable to write latency timer: %i", rv);
++    }
++    
++} /* ftdi_NDI_HUC_setup */
++
+ 
+ /* ftdi_shutdown is called from usbserial:usb_serial_disconnect
+  *   it is called when the usb device is disconnected
+@@ -2208,6 +2277,7 @@
+ 		goto failed_usb_register;
+ 
+ 	info(DRIVER_VERSION ":" DRIVER_DESC);
++
+ 	return 0;
+ failed_usb_register:
+ 	usb_serial_deregister(&ftdi_sio_device);
+@@ -2242,3 +2312,6 @@
+ module_param(product, ushort, 0);
+ MODULE_PARM_DESC(vendor, "User specified product ID");
+ 
++module_param(ndi_latency_timer, int, S_IRUGO | S_IWUSR);
++MODULE_PARM_DESC(ndi_latency_timer, "NDI HUC message latency timer");
++
+diff -Naur linux-2.6.20.original/drivers/usb/serial/ftdi_sio.h linux-2.6.20.all-patch/drivers/usb/serial/ftdi_sio.h
+--- linux-2.6.20.original/drivers/usb/serial/ftdi_sio.h	2007-04-13 16:48:14.000000000 -0400
++++ linux-2.6.20.all-patch/drivers/usb/serial/ftdi_sio.h	2007-04-23 11:16:45.000000000 -0400
+@@ -424,6 +424,14 @@
+ #define FTDI_PYRAMID_PID	0xE6C8	/* Pyramid Appliance Display */
+ 
+ /*
++ * NDI (www.ndigital.com) product ids
++ */
++#define FTDI_NDI_HUC_PID       	   0xDA70  /* NDI Host USB Converter */
++#define FTDI_NDI_SPECTRA_SCU_PID   0xDA71  /* NDI future device #1 */
++#define FTDI_NDI_FUTURE_2_PID      0xDA72  /* NDI future device #2 */
++#define FTDI_NDI_FUTURE_3_PID      0xDA73  /* NDI future device #3 */
++
++/*
+  * Posiflex inc retail equipment (http://www.posiflex.com.tw)
+  */
+ #define POSIFLEX_VID		0x0d3a  /* Vendor ID */

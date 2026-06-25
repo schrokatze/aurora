@@ -1,0 +1,571 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\CombinedAPISample.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\CombinedAPISample.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 235, 55
+STYLE DS_SETFONT | DS_MODALFRAME | DS_SETFOREGROUND | WS_POPUP | WS_VISIBLE | 
+    WS_CAPTION | WS_SYSMENU
+CAPTION "About NDI CombinedAPI Sample"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    LTEXT           "NDI CombinedAPI Sample Version 3.05",IDC_STATIC,35,17,
+                    130,8,SS_NOPREFIX
+    DEFPUSHBUTTON   "OK",IDOK,178,7,50,14,WS_GROUP
+END
+
+IDD_COMBINEDAPISAMPLE_DIALOG DIALOGEX 0, 0, 434, 309
+STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | 
+    WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "NDI CombinedAPI Sample"
+MENU IDR_MAIN_MENU
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    GROUPBOX        "System",IDC_STATIC,324,7,103,81
+    PUSHBUTTON      "&Reset System",IDC_RESET_SYSTEM,333,19,86,14,BS_VCENTER
+    PUSHBUTTON      "&Initialize System",IDC_INITIALIZE_SYSTEM,333,36,86,14
+    PUSHBUTTON      "&Activate Handles",IDC_ACTIVATE_PORTS,333,53,86,14
+    PUSHBUTTON      "&Start Tracking",IDC_TRACKING_BUT,333,70,86,14
+    GROUPBOX        "Tool Properties",IDC_STATIC,7,7,314,81
+    LTEXT           "Port Handle:",IDC_STATIC,13,20,40,8
+    COMBOBOX        IDC_PORT_HANDLES,74,17,62,48,CBS_DROPDOWN | CBS_SORT | 
+                    WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "",IDC_PORT_INIT,"Button",BS_AUTOCHECKBOX | WS_DISABLED | 
+                    WS_TABSTOP,177,17,9,8
+    LTEXT           "Handle Initialized",IDC_STATIC,187,17,54,8
+    CONTROL         "",IDC_PORT_ENABLED,"Button",BS_AUTOCHECKBOX | 
+                    WS_DISABLED | WS_TABSTOP,245,17,10,8
+    LTEXT           "Handle Enabled",IDC_STATIC,256,17,52,8
+    LTEXT           "Tool Type:",IDC_STATIC,13,36,35,8
+    EDITTEXT        IDC_TOOL_TYPE,74,33,87,14,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Serial Number:",IDC_STATIC,182,36,47,8
+    EDITTEXT        IDC_SERIAL_NO,232,33,76,14,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Manufacturer's ID:",IDC_STATIC,13,53,59,8
+    EDITTEXT        IDC_MANUF_ID,74,50,87,14,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Tool Revision:",IDC_STATIC,181,53,46,8
+    EDITTEXT        IDC_TOOL_REV,232,50,76,14,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Part Number:",IDC_STATIC,13,69,42,8
+    EDITTEXT        IDC_PARTNUMBER,74,66,87,14,ES_AUTOHSCROLL | ES_READONLY
+    GROUPBOX        "Tracking Information",IDC_STATIC,7,89,420,213
+    CONTROL         "List1",IDC_TRACKING_LIST,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SORTASCENDING | LVS_NOSORTHEADER | 
+                    WS_BORDER | WS_TABSTOP,14,100,407,133
+    GROUPBOX        "Tracking Mode",IDC_STATIC,11,237,181,60
+    CONTROL         "TX Mode (ASCII return for allocated port handles)",
+                    IDC_TRACKING_TX,"Button",BS_AUTORADIOBUTTON | WS_GROUP,
+                    15,249,171,10
+    CONTROL         "BX Mode (Binary return for allocated port handles)",
+                    IDC_TRACKING_BX,"Button",BS_AUTORADIOBUTTON | 
+                    WS_DISABLED,15,260,173,10
+    CONTROL         "Show rotations as Euler angles",IDC_EULER_ANGLES,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,272,113,10
+    CONTROL         "Use the 0x0800 option with the TX or BX command",
+                    IDC_TRACKING_REPORT_OOV,"Button",BS_AUTOCHECKBOX | 
+                    WS_GROUP | WS_TABSTOP,15,284,174,10
+    GROUPBOX        "System Information",IDC_STATIC,195,237,122,60
+    LTEXT           "Frame Number:",IDC_STATIC,202,249,49,8
+    EDITTEXT        IDC_FRAME_NO,253,246,56,14,ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "&Diagnostics Pending",IDC_DIAGNOSTICS_PENDING,217,265,
+                    78,14,WS_DISABLED
+    LTEXT           "Temperature out of range",IDC_TEMPERATURE_NOTE,216,284,
+                    81,8,NOT WS_VISIBLE
+    GROUPBOX        "Status Legend",IDC_STATIC,320,237,104,41
+    LTEXT           "OOV - Out of volume",IDC_STATIC,323,249,66,8
+    LTEXT           "POOV - Partially out of volume",IDC_STATIC,323,258,96,8
+    LTEXT           "OK - Tool is tracking in volume",IDC_STATIC,323,266,97,
+                    8
+    LTEXT           "Mode:",IDC_STATIC,319,284,21,8
+    EDITTEXT        IDC_SYSTEMMODE,341,281,81,14,ES_CENTER | ES_MULTILINE | 
+                    ES_AUTOHSCROLL | ES_READONLY
+    GROUPBOX        "",IDC_STATIC,178,64,143,24
+    LTEXT           "Reference Handle:",IDC_STATIC,181,73,61,8
+    COMBOBOX        IDC_REFERENCE_HANDLE_CMB,252,71,56,70,CBS_DROPDOWN | 
+                    CBS_SORT | WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_COM_PORT_SETTINGS DIALOG  0, 0, 177, 178
+STYLE DS_SETFONT | DS_MODALFRAME | DS_SETFOREGROUND | WS_POPUP | WS_VISIBLE | 
+    WS_CAPTION | WS_SYSMENU
+CAPTION "COM Port Settings"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "COM Port:",IDC_STATIC,32,10,34,8
+    COMBOBOX        IDC_COM_PORTS,74,8,65,66,CBS_DROPDOWN | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Baud Rate:",IDC_STATIC,32,27,37,8
+    COMBOBOX        IDC_BAUD_RATE,74,25,65,86,CBS_DROPDOWN | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Data Bits:",IDC_STATIC,32,44,32,8
+    COMBOBOX        IDC_DATA_BITS,74,42,65,67,CBS_DROPDOWN | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Parity:",IDC_STATIC,32,61,20,8
+    COMBOBOX        IDC_PARITY,74,59,65,67,CBS_DROPDOWN | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Stop Bits:",IDC_STATIC,32,78,31,8
+    COMBOBOX        IDC_STOP_BITS,74,76,65,67,CBS_DROPDOWN | WS_VSCROLL | 
+                    WS_TABSTOP
+    GROUPBOX        "                     ",IDC_STATIC,13,115,146,36
+    CONTROL         "Wireless Communication Port",IDC_WIRELESS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,21,114,107,10
+    CONTROL         "&Hardware handshaking",IDC_HARDWARE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,42,94,89,10
+    CONTROL         "&Reset hardware upon initialization",IDC_RESET,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,27,129,121,10
+    DEFPUSHBUTTON   "&OK",IDOK,29,157,50,14
+    PUSHBUTTON      "&Cancel",IDCANCEL,91,157,50,14
+    LTEXT           "When communicating wirelessly, make sure a SERIAL BREAK is not issued.  Instead use the RESET 0 command.",
+                    IDC_WIRELESS_NOTE,17,125,137,24
+END
+
+IDD_ROM_FILES DIALOG  0, 0, 300, 193
+STYLE DS_SETFONT | DS_MODALFRAME | DS_SETFOREGROUND | WS_POPUP | WS_VISIBLE | 
+    WS_CAPTION | WS_SYSMENU
+CAPTION "SROM Image Files"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "C&lose",IDC_CLOSE,243,172,50,14
+    CONTROL         "List1",IDC_PORT_LISTING,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_NOSORTHEADER | WS_BORDER | 
+                    WS_TABSTOP,7,7,286,98
+    LTEXT           "SROM Image File:",IDC_ROM_LABEL,11,124,58,11
+    EDITTEXT        IDC_ROM_FILE,71,123,197,14,ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "...",IDC_BROWSE,272,123,18,14,WS_DISABLED
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKRECT | SS_SUNKEN,7,162,
+                    286,1
+    PUSHBUTTON      "&Save",IDC_ACCEPT,107,142,65,14,WS_DISABLED
+    LTEXT           "Port ID:",IDC_STATIC,13,109,25,8
+    EDITTEXT        IDC_PORT,71,107,88,14,ES_AUTOHSCROLL | ES_READONLY
+END
+
+IDD_SYSTEM_FEATURES DIALOG  0, 0, 281, 193
+STYLE DS_SETFONT | DS_MODALFRAME | DS_SETFOREGROUND | WS_POPUP | WS_VISIBLE | 
+    WS_CAPTION | WS_SYSMENU
+CAPTION "System Features"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,165,172,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,224,172,50,14,NOT WS_VISIBLE
+    GROUPBOX        "Version Information",IDC_STATIC,6,5,268,95
+    EDITTEXT        IDC_VERSION_INFO,14,18,253,76,ES_MULTILINE | 
+                    ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | 
+                    WS_VSCROLL
+    GROUPBOX        "System Information",IDC_SYSTEM_INFO_FRAME,6,105,268,60
+    LTEXT           "Number of active ports:",IDC_ACTIVE_PORTS_LBL,14,117,94,
+                    8
+    EDITTEXT        IDC_ACTIVE_PORTS,108,114,31,14,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "Number of ports supporting tool-in-port detection:",
+                    IDC_TIP_DETECTION_LBL,147,113,89,17,NOT WS_VISIBLE
+    EDITTEXT        IDC_TIP_DETECTION,239,114,31,14,ES_AUTOHSCROLL | 
+                    ES_READONLY | NOT WS_VISIBLE
+    LTEXT           "Number of wireless:",IDC_PASSIVE_PORTS_LBL,14,133,94,8
+    EDITTEXT        IDC_PASSIVE_PORTS,108,130,31,14,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "Number of active wireless ports:",
+                    IDC_ACTIVE_WIRELESS_LBL,14,145,94,17
+    EDITTEXT        IDC_ACTIVE_WIRELESS,108,146,31,14,ES_AUTOHSCROLL | 
+                    ES_READONLY
+END
+
+IDD_ILL_FIRING_RATE DIALOG  0, 0, 153, 73
+STYLE DS_SETFONT | DS_MODALFRAME | DS_SETFOREGROUND | WS_POPUP | WS_VISIBLE | 
+    WS_CAPTION | WS_SYSMENU
+CAPTION "Illuminator Activation Rate"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,25,52,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,79,52,50,14
+    GROUPBOX        "Activation Rate",IDC_STATIC,7,7,139,41
+    CONTROL         "20 Hz",IDC_20HZ,"Button",BS_AUTORADIOBUTTON | WS_GROUP,
+                    17,24,35,10
+    CONTROL         "30 Hz",IDC_30HZ,"Button",BS_AUTORADIOBUTTON,60,24,35,10
+    CONTROL         "60 Hz",IDC_60HZ,"Button",BS_AUTORADIOBUTTON,103,24,35,
+                    10
+END
+
+IDD_PROGRAM_OPTIONS DIALOG  0, 0, 282, 198
+STYLE DS_SETFONT | DS_MODALFRAME | DS_SETFOREGROUND | WS_POPUP | WS_VISIBLE | 
+    WS_CAPTION | WS_SYSMENU
+CAPTION "Program Options"
+FONT 8, "MS Sans Serif"
+BEGIN
+    GROUPBOX        "Logging To a File",IDC_STATIC,7,7,268,77
+    CONTROL         "Log COM port communications to file",IDC_LOG_TO_FILE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,76,22,131,10
+    LTEXT           "File name:",IDC_STATIC,15,39,33,8
+    EDITTEXT        IDC_LOG_FILE,53,36,194,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "...",IDC_BROWSE,249,36,17,14
+    CONTROL         "Include time stamp",IDC_DATETIME_STAMP,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,76,55,75,10
+    CONTROL         "Clear file on system initialization",IDC_CLEAR_FILE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,76,68,113,10
+    GROUPBOX        "Beep Options",IDC_STATIC,7,86,268,50
+    CONTROL         "Beep system on ERROR return",IDC_BEEP_ERROR,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,16,101,114,10
+    LTEXT           "No. of beeps:",IDC_STATIC,162,101,44,8
+    EDITTEXT        IDC_NO_ERROR_BEEPS,207,98,22,14,ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    LTEXT           "(1-9)",IDC_STATIC,233,101,15,8
+    CONTROL         "Beep system on WARNING return",IDC_BEEP_ON_WARNING,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,116,123,10
+    LTEXT           "No. of beeps:",IDC_STATIC,162,116,44,8
+    EDITTEXT        IDC_NO_WARNING_BEEPS,207,113,22,14,ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    LTEXT           "(1-9)",IDC_STATIC,233,116,15,8
+    DEFPUSHBUTTON   "OK",IDOK,89,177,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,143,177,50,14
+    GROUPBOX        "Messaging",IDC_STATIC,7,138,268,35
+    CONTROL         "Display error messages while in tracking mode\nSystem needs to restart tracking for setting to take affect",
+                    IDC_REPORT_WHILE_TRACKING,"Button",BS_AUTOCHECKBOX | 
+                    BS_MULTILINE | WS_TABSTOP,46,148,194,17
+END
+
+IDD_COMMPORTTIMEOUT DIALOG  0, 0, 220, 94
+STYLE DS_SETFONT | DS_MODALFRAME | DS_SETFOREGROUND | WS_POPUP | WS_VISIBLE | 
+    WS_CAPTION
+CAPTION "COM Port Timeout"
+FONT 8, "MS Sans Serif"
+BEGIN
+    PUSHBUTTON      "&Retry",IDC_RETRY,7,69,62,14
+    PUSHBUTTON      "R&estart",IDC_RESTART,83,69,50,14
+    PUSHBUTTON      "&Close Application",IDC_CLOSEAPPLICATION,147,69,65,14
+    LTEXT           "A timeout occurred in COM Port communications.",
+                    IDC_STATIC,56,15,157,11
+    LTEXT           "To resend the command press the ""Retry"" button.  \nTo restart the application press the ""Restart"" button.  \nTo Close the Application press the ""Close Application"" button.",
+                    IDC_STATIC,7,33,200,29
+    ICON            "",IDC_ICON_FRAME,14,11,20,20
+END
+
+IDD_ALERTS DIALOG  0, 0, 285, 215
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Diagnostics Alert Flags"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Please see the Vicra API Guide for more information regarding these flags.  Note: these fields don't automatically update, to get the latest status you need to close and reopen this dialog.",
+                    IDC_STATIC,7,7,271,28
+    GROUPBOX        "Flags",IDC_STATIC,7,45,271,140
+    LTEXT           "Fatal Parameter Fault",IDC_0x00000001,26,62,68,8
+    LTEXT           "Sensor Parameter Fault",IDC_0x00000002,26,74,74,8
+    LTEXT           "Main Voltage Fault",IDC_0x00000004,26,86,60,8
+    LTEXT           "Sensor Voltage Fault",IDC_0x00000008,26,98,66,8
+    LTEXT           "Illuminator Voltage Fault",IDC_0x00000010,26,110,76,8
+    LTEXT           "Illuminator Current Fault",IDC_0x00000020,26,122,74,8
+    LTEXT           "Left Sensor Temperature Fault",IDC_0x00000040,26,134,96,
+                    8
+    LTEXT           "Right Sensor Temperature Fault",IDC_0x00000080,26,146,
+                    101,8
+    LTEXT           "Main Board Temperature Fault",IDC_0x00000100,26,158,96,
+                    8
+    LTEXT           "System Battery Fault Alarm",IDC_0x00100000,148,62,84,8
+    LTEXT           "Bump Detected Alarm",IDC_0x00200000,148,74,70,8
+    LTEXT           "Cable Fault Alarm",IDC_0x00400000,148,86,56,8
+    LTEXT           "Firmware Incompatible Alarm",IDC_0x00800000,148,98,90,8
+    LTEXT           "Non-Fatal Parameter Fault Alarm",IDC_0x01000000,148,110,
+                    102,8
+    LTEXT           "Internal Flash Memory is Full",IDC_0x02000000,148,122,
+                    89,8
+    LTEXT           "Laser Battery Fault",IDC_0x04000000,148,134,60,8
+    LTEXT           "Temperature Characterized High Fault",IDC_0x20000000,
+                    148,146,120,8
+    LTEXT           "Temperature Characterized Low Fault",IDC_0x40000000,148,
+                    158,119,8
+    DEFPUSHBUTTON   "OK",IDOK,228,194,50,14
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 2,0,2,0
+ PRODUCTVERSION 2,0,2,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "CompanyName", "Northern Digital Inc."
+            VALUE "FileDescription", "NDI CombinedAPI Sample MFC Application"
+            VALUE "FileVersion", "2, 0, 2, 0"
+            VALUE "InternalName", "NDI CombinedAPI Sample"
+            VALUE "LegalCopyright", "Copyright (C) 2003"
+            VALUE "OriginalFilename", "NDICombinedAPISample.EXE"
+            VALUE "ProductName", "NDI CombinedAPI Sample Application"
+            VALUE "ProductVersion", "2, 0, 2, 0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_COMBINEDAPISAMPLE_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 427
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 302
+    END
+
+    IDD_COM_PORT_SETTINGS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 170
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 171
+    END
+
+    IDD_ROM_FILES, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 293
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 186
+    END
+
+    IDD_SYSTEM_FEATURES, DIALOG
+    BEGIN
+        LEFTMARGIN, 6
+        RIGHTMARGIN, 274
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 186
+    END
+
+    IDD_ILL_FIRING_RATE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 146
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 66
+    END
+
+    IDD_PROGRAM_OPTIONS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 275
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 191
+    END
+
+    IDD_COMMPORTTIMEOUT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 213
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 87
+    END
+
+    IDD_ALERTS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 278
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 208
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAIN_MENU MENU 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "E&xit\tAlt-F4",               ID_FILE_EXIT
+    END
+    POPUP "S&ettings"
+    BEGIN
+        MENUITEM "&COM Port Settings\tF6",      ID_SETTINGS_COMPORTSETTINGS
+        MENUITEM "&SROM Image File Settings\tF7", 
+                                                ID_SETTINGS_ROMFILESETTINGS
+    END
+    POPUP "S&ystem"
+    BEGIN
+        MENUITEM "&Initialize System\tF2",      ID_SYSTEM_INITIALIZESYSTEM
+        MENUITEM "&Activate Handles\tF3",       ID_SYSTEM_ACTIVATEPORTS
+        MENUITEM SEPARATOR
+        MENUITEM "&Start Tracking\tF4",         ID_SYSTEM_STARTTRACKING
+        MENUITEM "S&top Tracking\tF5",          ID_SYSTEM_STOPTRACKING
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "System &Properties\tF8",      ID_VIEW_SYSTEMPROPERTIES
+        MENUITEM "&Diagnostic Alerts\tF9",      ID_VIEW_DIAGNOSTICALERTS
+    END
+    POPUP "O&ptions"
+    BEGIN
+        MENUITEM "&Illuminator Activation Rate", 
+                                                ID_OPTIONS_ILLUMINATORFIRINGRATE
+
+        MENUITEM SEPARATOR
+        MENUITEM "&Program Options",            ID_OPTIONS_PROGRAMOPTIONS
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&About NDI CombinedAPI Sample", 
+                                                ID_HELP_ABOUTCOMBINEDAPISAMPLE
+
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAIN_MENU ACCELERATORS 
+BEGIN
+    VK_F2,          ID_SYSTEM_INITIALIZESYSTEM, VIRTKEY, NOINVERT
+    VK_F3,          ID_SYSTEM_ACTIVATEPORTS, VIRTKEY, NOINVERT
+    VK_F4,          ID_SYSTEM_STARTTRACKING, VIRTKEY, NOINVERT
+    VK_F5,          ID_SYSTEM_STOPTRACKING, VIRTKEY, NOINVERT
+    VK_F6,          ID_SETTINGS_COMPORTSETTINGS, VIRTKEY, NOINVERT
+    VK_F7,          ID_SETTINGS_ROMFILESETTINGS, VIRTKEY, NOINVERT
+    VK_F8,          ID_VIEW_SYSTEMPROPERTIES, VIRTKEY, NOINVERT
+    VK_F9,          ID_VIEW_DIAGNOSTICALERTS, VIRTKEY, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_ABOUTBOX            "&About NDI CombinedAPI Sample..."
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif //_WIN32
+#include "res\CombinedAPISample.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
